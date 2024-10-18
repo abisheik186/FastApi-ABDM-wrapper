@@ -75,6 +75,7 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
 async def handle_generate_token(request: Request):
     try:
         data = await request.json()  # Attempt to get the JSON payload
+        print(data)
         return data  # Echo back the received data
     except ValueError as ve:
         return JSONResponse(status_code=400, content={"detail": "Invalid JSON", "error": str(ve)})
