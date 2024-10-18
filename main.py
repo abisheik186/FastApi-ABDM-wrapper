@@ -68,5 +68,3 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
     except Exception as e:
         # Log and return a generic error
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
-
-def link
