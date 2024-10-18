@@ -69,6 +69,8 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
         # Log and return a generic error
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-@app.post("/")
-def ping():
-    return "PONG"
+@app.post("/api/v3/hip/token/on-generate-token")
+async def handle_generate_token(request: Request):
+    # Process the incoming data
+    data = await request.json()
+    return data
