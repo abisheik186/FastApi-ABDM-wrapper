@@ -73,6 +73,7 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
 
 @app.post("/api/v3/hip/token/on-generate-token")
 async def handle_generate_token(request: Request):
+    print("inside handle generate token")
     try:
         data = await request.json()  # Attempt to get the JSON payload
         print(data)
