@@ -70,6 +70,9 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
         # Log and return a generic error
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the FastAPI application!"}
 
 @app.post("/api/v3/hip/token/on-generate-token")
 async def handle_generate_token(request: Request):
