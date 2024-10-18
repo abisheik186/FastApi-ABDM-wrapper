@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import httpx
 import uuid
