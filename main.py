@@ -69,8 +69,14 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
         # Log and return a generic error
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
+
 @app.post("/api/v3/hip/token/on-generate-token")
 async def handle_generate_token(request: Request):
-    # Process the incoming data
-    data = await request.json()
-    return data
+    try:
+        data = await request.json()  # Attempt to get the JSON payload
+        return data  # Echo back the received data
+    except ValueError as ve:
+        return JSONResponse(status_code=400, content={"detail": "Invalid JSON", "error": str(ve)})
+    except Exception as e:
+        print(f"Error: {e}")  # Log the error for debugging
+        raise HTTPException(status_code=500, detail="Internal Server Error")  # Raise an HTTP error
