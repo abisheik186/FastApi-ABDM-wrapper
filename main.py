@@ -84,17 +84,17 @@ async def read_root():
     return {"message": "Welcome to the FastAPI application!"}
 
 @app.post("/api/v3/hip/token/on-generate-token")
-async def handle_generate_token(link_data: ABDMLinkTokenData):
+async def handle_generate_token(request:Request):
     print("inside handle generate token")
     logging.info("hello")
-    print("link data",link_data)
+    print("request",request)
     try:
-        # # data = await request.body()  # Attempt to get the JSON payload
-        # logging.info(f"Received data: {data}")
-        # print("data",data)
+        data = await request.body()  # Attempt to get the JSON payload
+        logging.info(f"Received data: {data}")
+        print("data",data)
         response =  {
             "status":"success",
-            "data": link_data
+            "data": data
         }
         logging.info(f"Response data: {response}")
         return response
