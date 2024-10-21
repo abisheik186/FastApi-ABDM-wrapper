@@ -17,6 +17,10 @@ class ABDMSettings(BaseModel):
     client_secret: str
     auth_base_url: str
 
+class ABDMLinkTokenData (BaseModel):
+    abhaAddress:str
+    linkToken:str
+
 # Dependency to get ABDM settings, replace with actual DB call
 def get_abdm_settings() -> ABDMSettings:
     # Replace this with your actual database logic
@@ -80,17 +84,17 @@ async def read_root():
     return {"message": "Welcome to the FastAPI application!"}
 
 @app.post("/api/v3/hip/token/on-generate-token")
-async def handle_generate_token(request: Request):
+async def handle_generate_token(link_data: ABDMLinkTokenData):
     print("inside handle generate token")
     logging.info("hello")
-    print(request)
+    print("link data",link_data)
     try:
-        data = await request.body()  # Attempt to get the JSON payload
-        logging.info(f"Received data: {data}")
-        print("data",data)
+        # # data = await request.body()  # Attempt to get the JSON payload
+        # logging.info(f"Received data: {data}")
+        # print("data",data)
         response =  {
-            "status":"Success",
-            "data": data
+            "status":"success",
+            "data": link_data
         }
         logging.info(f"Response data: {response}")
         return response
