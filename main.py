@@ -94,7 +94,7 @@ async def handle_generate_token(request:Request):
         print("data",data)
         response =  {
             "status":"success",
-            "data": data
+            "data": request
         }
         logging.info(f"Response data: {response}")
         return response
