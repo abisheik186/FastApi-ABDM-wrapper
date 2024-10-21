@@ -80,9 +80,21 @@ async def handle_generate_token(request: Request):
     try:
         data = await request.json()  # Attempt to get the JSON payload
         print(data)
-        return data  # Echo back the received data
+        return {
+            "status":"Success",
+            "data": data
+        }  # Echo back the received data
     except ValueError as ve:
         return JSONResponse(status_code=400, content={"detail": "Invalid JSON", "error": str(ve)})
     except Exception as e:
         print(f"Error: {e}")  # Log the error for debugging
         raise HTTPException(status_code=500, detail="Internal Server Error")  # Raise an HTTP error
+
+@app.post("/fetchlinktoken")
+async def fetch_link_token():   
+    url = "https://abdm-wrapper.onrender.com/api/v3/hip/token/on-generate-token"  # Replace with the actual URL
+    async with httpx.AsyncClient() as client:
+        response = await client.post(url)
+        response_data = response.json()
+        # link_token = response_data.get("linkToken")
+        return response_data
