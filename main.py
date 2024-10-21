@@ -75,6 +75,8 @@ async def get_authorization_token(settings: ABDMSettings = Depends(get_abdm_sett
 
 @app.get("/")
 async def read_root():
+    logging.info("welcome")
+    print("checking log...")
     return {"message": "Welcome to the FastAPI application!"}
 
 @app.post("/api/v3/hip/token/on-generate-token")
