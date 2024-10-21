@@ -87,7 +87,7 @@ async def handle_generate_token(request: Request):
     try:
         data = await request.body()  # Attempt to get the JSON payload
         logging.info(f"Received data: {data}")
-        print(data)
+        print("data",data)
         response =  {
             "status":"Success",
             "data": data
