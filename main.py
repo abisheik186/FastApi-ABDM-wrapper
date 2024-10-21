@@ -5,6 +5,9 @@ import httpx
 import uuid
 import json
 from datetime import datetime, timezone
+import logging
+
+logging.basicConfig(filename=app.log, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = FastAPI()
 
@@ -78,15 +81,20 @@ async def read_root():
 async def handle_generate_token(request: Request):
     print("inside handle generate token")
     try:
-        data = await request.json()  # Attempt to get the JSON payload
+        data = request.body()  # Attempt to get the JSON payload
+        logging.info(f"Received data: {data}")
         print(data)
-        return {
+        response =  {
             "status":"Success",
             "data": data
-        }  # Echo back the received data
+        }
+        logging.info(f"Response data: {response}")
+        return response
     except ValueError as ve:
+        logging.error(f"Invalid JSON: {ve}")
         return JSONResponse(status_code=400, content={"detail": "Invalid JSON", "error": str(ve)})
     except Exception as e:
+        logging.error(f"Internal Server Error: {e}")
         print(f"Error: {e}")  # Log the error for debugging
         raise HTTPException(status_code=500, detail="Internal Server Error")  # Raise an HTTP error
 
