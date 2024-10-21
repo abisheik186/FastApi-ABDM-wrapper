@@ -80,6 +80,7 @@ async def read_root():
 @app.post("/api/v3/hip/token/on-generate-token")
 async def handle_generate_token(request: Request):
     print("inside handle generate token")
+    logging.info("hello")
     try:
         data = await request.body()  # Attempt to get the JSON payload
         logging.info(f"Received data: {data}")
