@@ -87,14 +87,14 @@ async def read_root():
 async def handle_generate_token(request:Request):
     print("inside handle generate token")
     logging.info("hello")
-    print("request",request)
+    print("request",request.body)
     try:
         data = await request.body()  # Attempt to get the JSON payload
         logging.info(f"Received data: {data}")
         print("data",data)
         response =  {
             "status":"success",
-            "data": request
+            "data": data
         }
         logging.info(f"Response data: {response}")
         return response
