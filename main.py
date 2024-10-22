@@ -87,7 +87,6 @@ async def read_root():
 async def handle_generate_token(request:Request):
     print("inside handle generate token")
     logging.info("hello")
-    print("request",request.body)
     try:
         data = await request.body()  # Attempt to get the JSON payload
         logging.info(f"Received data: {data}")
@@ -97,7 +96,7 @@ async def handle_generate_token(request:Request):
             "data": data
         }
         logging.info(f"Response data: {response}")
-        return response
+        return response,data
     except ValueError as ve:
         logging.error(f"Invalid JSON: {ve}")
         return JSONResponse(status_code=400, content={"detail": "Invalid JSON", "error": str(ve)})
