@@ -113,3 +113,41 @@ async def fetch_link_token():
         response_data = response.json()
         # link_token = response_data.get("linkToken")
         return response_data
+
+from fastapi import FastAPI
+import logging
+from logging_config import setup_logging, send_to_slack
+
+# Initialize FastAPI app
+app = FastAPI()
+
+# Set up logging
+setup_logging()
+
+@app.get("/test-logging")
+async def test_logging():
+    # Test: Info log
+    logging.info("This is an INFO log test.")
+    
+    # Test: Send an info message directly to Slack
+    send_to_slack("INFO: Testing direct Slack message functionality.")
+
+    # Test: Warning log
+    logging.warning("This is a WARNING log test.")
+
+    # Test: Error log (will trigger Slack notification via logging)
+    try:
+        # Simulate an error
+        1 / 0
+    except ZeroDivisionError as e:
+        logging.error(f"ERROR: Division by zero occurred: {e}")
+        send_to_slack(f"ERROR: Division by zero detected: {e}")
+
+    # Test: Critical log (will also trigger Slack notification)
+    logging.critical("This is a CRITICAL log test.")
+
+    # Test: Send custom data to Slack
+    custom_data = {"status": "Testing", "message": "This is a custom data message for Slack."}
+    send_to_slack(f"Custom Data: {custom_data}")
+
+    return {"status": "Logging test completed. Check your Slack for logs."}
