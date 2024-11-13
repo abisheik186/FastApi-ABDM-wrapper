@@ -19,10 +19,10 @@ class SlackHandler(logging.Handler):
             print(f"Failed to send log to Slack: {e}")
 
 # Slack Webhook URL (replace with your actual webhook URL)
-SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/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'
 
 # Logging configuration function
-def setup_logging():
+def setup_logging():c
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
