@@ -6,6 +6,9 @@ import uuid
 import json
 from datetime import datetime, timezone
 import logging
+from logging_config import setup_logging, send_to_slack
+setup_logging()
+
 
 logging.basicConfig(filename = "app.log", level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -105,24 +108,7 @@ async def handle_generate_token(request:Request):
         print(f"Error: {e}")  # Log the error for debugging
         raise HTTPException(status_code=500, detail="Internal Server Error")  # Raise an HTTP error
 
-@app.post("/fetchlinktoken")
-async def fetch_link_token():   
-    url = "https://abdm-wrapper.onrender.com/api/v3/hip/token/on-generate-token"  # Replace with the actual URL
-    async with httpx.AsyncClient() as client:
-        response = await client.post(url)
-        response_data = response.json()
-        # link_token = response_data.get("linkToken")
-        return response_data
 
-from fastapi import FastAPI
-import logging
-from logging_config import setup_logging, send_to_slack
-
-# Initialize FastAPI app
-app = FastAPI()
-
-# Set up logging
-setup_logging()
 
 @app.get("/test-logging")
 async def test_logging():
@@ -147,7 +133,8 @@ async def test_logging():
     logging.critical("This is a CRITICAL log test.")
 
     # Test: Send custom data to Slack
-    custom_data = {"status": "Testing", "message": "This is a custom data message for Slack."}
+    custom_data = {"status": "Testing",
+                     "message": "This is a custom data message for Slack."}
     send_to_slack(f"Custom Data: {custom_data}")
 
-    return {"status": "Logging test completed. Check your Slack for logs."}
+    return {"status": "Logging test completed. Check your Slack for logs.","custom_data":custom_data}
