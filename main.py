@@ -14,7 +14,7 @@ logging.basicConfig(filename = "app.log", level=logging.INFO, format='%(asctime)
 
 app = FastAPI()
 
-# Sample Settings (You can replace this with an actual database fetch)
+# Sample Settings (replace this with an actual database fetch)
 class ABDMSettings(BaseModel):
     client_id: str
     client_secret: str
@@ -24,7 +24,7 @@ class ABDMLinkTokenData (BaseModel):
     abhaAddress:str
     linkToken:str
 
-# Dependency to get ABDM settings, replace with actual DB call
+# Dependency to get ABDM settings
 def get_abdm_settings() -> ABDMSettings:
     # Replace this with your actual database logic
     return ABDMSettings(
